@@ -1,0 +1,48 @@
+@use "../01_settings" as *;
+@use "sass:map";
+@use "sass:math";
+
+:root {
+	--col-gap-x--sm: 32px;
+	--col-gap-x--md: 32px;
+	--col-gap-x--lg: 32px;
+	--col-gap-x--xl: 32px;
+}
+
+// Creates media-query for all breakpoints.
+@mixin create-mq($min-width, $max-width: null) {
+	@if $min-width == null {
+		@content;
+	} @else if $max-width {
+		@media (min-width: $min-width) and (max-width: $max-width) {
+			@content;
+		}
+	} @else {
+		@media (min-width: $min-width) {
+			@content;
+		}
+	}
+}
+
+@mixin create-col-classes($modifier, $min-width, $max-width: null) {
+	$cols: map.get($grid, 'cols');
+
+	@include create-mq($min-width, $max-width) {
+		@for $i from 1 through $cols {
+			$width: math.div(100%, $cols) * $i;
+
+			.o-col#{$modifier}-#{$i} {
+				flex-basis: $width;
+				max-width: $width;
+			}
+
+			.o-col#{$modifier}-offset-#{$i} {
+				margin-left: $width;
+			}
+		}
+
+		.o-col#{$modifier}-offset-0 {
+			margin-left: 0;
+		}
+	}
+}

@@ -1,0 +1,11 @@
+@use "../01_settings" as *;
+
+p {
+  margin: 0 0 $space-md;
+  padding: 0;
+
+  // ??
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}

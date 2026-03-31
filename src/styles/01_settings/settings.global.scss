@@ -1,0 +1,52 @@
+@use 'sass:map';
+@use 'settings.breakpoints' as breakpoints;
+
+/*
+  Boders
+*/
+$border-r: 0.3rem;
+$border-r--bigger: 0.5rem;
+$border-r--big: 0.8rem;
+$border-r--largest: 1rem;
+$border-r--round: 9999px;
+$border-w: 0.1rem;
+
+/*
+  Path where images are store
+*/
+$img-path: "./../img";
+
+/*
+  margins and padding are generate up to 
+  e.g. mb-0 -> mb-64
+*/
+$gaps-stop: 64;
+
+/*
+  this number will be added on end of each 
+  iteration when making spacing classes.
+  ruse is that: $gaps-stop % increment === 0
+*/
+$increment: 4;
+
+/*
+  Inputs, Buttons
+*/
+$input-h: 4rem;
+
+/* 
+  Universal box-shadow
+*/
+$block-box-shadow: 0 0.2rem 0.4rem rgba(0, 0, 0, 0.1);
+
+
+/*
+  Grid settings
+*/
+$grid: (
+  'cols': 12,
+  'from-to-cols': 13,
+  'tablet-min': map.get(breakpoints.$breakpoints, 'tablet-min'),
+  'screen-min': map.get(breakpoints.$breakpoints, 'screen-min'),
+  'largescreen-min': map.get(breakpoints.$breakpoints, 'large-screen-min'),
+);

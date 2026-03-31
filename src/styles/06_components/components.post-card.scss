@@ -1,0 +1,79 @@
+@use "../01_settings" as *;
+@use "sass:map";
+
+$post-card: (
+  "text-c": $text-c,
+  "bg": $light-c,
+  "border-r": $border-r--largest,
+
+  "padding": $space-nm $space-md,
+);
+
+.c-post-card {
+  position: relative;
+  padding: map.get($post-card, "padding");
+
+  background-color: map.get($post-card, "bg");
+  border-radius: map.get($post-card, "border-r");
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.1);
+
+  transition: all 0.3s ease;
+
+  &:hover,
+  &:focus-within {
+    transform: translateY(-5px);
+    box-shadow: 0 0.6rem 1.2rem rgba(0, 0, 0, 0.15);
+  }
+}
+
+.c-post-card-details {
+  display: flex;
+  
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: center;
+
+  font-size: $text-sm;
+  color: $text-c--lighter;
+}
+
+.c-post-card-title,
+.c-post-card-perex {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}
+
+.c-post-card-title {
+  font-weight: 600;
+
+  a {
+    color: map.get($post-card, "text-c");
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.c-post-card-perex {
+  margin-bottom: $space-sm;
+  
+  -webkit-line-clamp: 3;
+}
+
+.c-post-card-dot {
+  width: 4px;
+  height: 4px;
+
+  margin: 0 $space-xs;
+
+  background-color: map.get($post-card, "text-c");
+  border-radius: $border-r--round;
+}
+
+.c-post-card-link {
+  position: absolute; 
+  inset: 0;
+}

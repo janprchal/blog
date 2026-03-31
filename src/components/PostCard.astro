@@ -1,0 +1,36 @@
+---
+// Library imports
+import { Image } from 'astro:assets';
+import PostHeader from "./PostHeader.astro";
+
+// Utils import
+import { slugify, formatDate } from "../js/utils.js";
+import { navigate } from 'astro:transitions/client';
+
+const {frontmatter, url, tagType} = Astro.props;
+const { title, author, date, category, image, perex } = frontmatter;
+
+const Tag = tagType === 'h2' ? 'h2' : 'h3';
+---
+
+<article class="c-post-card">
+  <a class="c-pill c-pill--css mb-12" href={`category/${slugify(category)}/`}>
+    <span class="uppercase">{category}</span>
+  </a>
+  
+  <Tag class="c-post-card-title h3">
+    <a href={url}>
+      {title}
+    </a>
+  </Tag>
+  <div class="c-post-card-perex">{perex}</div>
+
+  <div class:list={[
+    'c-post-card-details', 
+    {'c-post-card-details--without-perex': !perex}
+  ]}>
+    <div class="c-post-card-author">By - <a href={`/author/${slugify(author)}/`}>{author}</a></div>
+    <span class="c-post-card-dot"></span>
+    <div class="c-post-card-date">{formatDate(date)}</div>
+  </div>  
+</article>

@@ -1,0 +1,15 @@
+@use "../01_settings" as *;
+@use "../02_tools/tools.grid-grid" as grid-grid;
+@use "sass:map";
+
+.o-grid {
+  display: grid;
+	grid-template-columns: repeat(12, 1fr);
+	grid-template-rows: 1fr auto;
+  column-gap: var(--col-gap-x--lg);
+}
+
+@include grid-grid.create-col-classes('', 0, null);
+@include grid-grid.create-col-classes('-md', map.get($grid, 'tablet-min'), null);
+@include grid-grid.create-col-classes('-lg', map.get($grid, 'screen-min'), null);
+@include grid-grid.create-col-classes('-xl', map.get($grid, 'largescreen-min'), null);

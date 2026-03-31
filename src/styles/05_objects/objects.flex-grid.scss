@@ -1,0 +1,59 @@
+@use "../01_settings" as *;
+@use "../02_tools" as *;
+@use "../02_tools/tools.flex-grid" as flex-grid;
+
+@use "sass:map";
+@use "sass:math";
+
+// Create column classes for base, md, and lg breakpoints.
+@include flex-grid.create-col-classes('', null);
+@include flex-grid.create-col-classes('-md', map.get($grid, 'tablet-min'));
+@include flex-grid.create-col-classes('-lg', map.get($grid, 'screen-min'));
+@include flex-grid.create-col-classes('-xl', map.get($grid, 'large-screen-min'));
+
+.o-row {
+  @include row();
+}
+
+// All cols
+[class*="o-col-"] {
+  flex-grow: 0;
+  flex-shrink: 0;
+
+  padding-right: math.div($col-padding-x--sm, 2);
+  padding-left: math.div($col-padding-x--sm, 2);
+
+  @include tablet-min {
+    padding-right: math.div($col-padding-x--md, 2);
+    padding-left: math.div($col-padding-x--md, 2);
+  }
+
+  @include screen-min {
+    padding-right: math.div($col-padding-x--lg, 2);
+    padding-left: math.div($col-padding-x--lg, 2);
+  }
+
+  @include large-screen-min {
+    padding-right: math.div($col-padding-x--xl, 2);
+    padding-left: math.div($col-padding-x--xl, 2);
+  }
+
+}
+
+// Row nested in column should not have negative margins
+// and should be 100% width
+[class*="o-col-"] > .o-row {
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+}
+
+.o-row--no-gaps {
+  width: 100%;
+  margin-right: 0;
+  margin-left: 0;
+
+  [class*="o-col-"] {
+    padding: 0;
+  }
+}

@@ -1,0 +1,14 @@
+@use "../01_settings" as *;
+
+a {
+  color: $link-c;
+  font-family: monospace;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $link-c--hover;
+  }
+}

@@ -1,0 +1,21 @@
+---
+// Parts imports
+import MainLayout from "./MainLayout.astro"
+import PostHeader from "../components/PostHeader.astro";
+
+const { title, author, date, category, image, description } = Astro.props;
+---
+
+<MainLayout title={title} description={description}>
+  <div class="o-post">
+  <PostHeader 
+    {title}
+    {author}
+    {date}
+    {category}
+    {image}
+  />
+    <!-- post contnet -->
+    <slot /> 
+  </div>  
+</MainLayout>

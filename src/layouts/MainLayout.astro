@@ -1,0 +1,51 @@
+---
+// component imports
+import MainHead from "./MainHead.astro";
+import Footer from "../components/Footer.astro";
+import Nav from "../components/Nav.astro";
+import Logo from "../components/Logo.astro";
+
+// style imports
+import "../styles/main.scss";
+
+/**
+ * V pages posilame title jako prop do MainLayout skrz Astro.props, ten tady pomoci desctructuring
+ * vyndame a muzeme pouzit v head sekci pro nastaveni title stranky
+ * 
+ * Pokud title neni poslan, nastavime defaultni hodnotu "Default Title"
+ */
+const { title = "Astro Blogisek", description = "Blog about Frontend technologies", footerMessage = "Default footer message" } = Astro.props;
+---
+
+<html lang="en">
+  <!-- 
+    nemusime zadavat title={title}, ...
+  -->
+  <MainHead {title} {description} />
+	<body class="fluid-layout">
+    <div class="o-wrapper">
+      <div class="o-wrapper__nav">
+        <div class="o-nav" id="js_navBlock">
+          <div class="o-nav__logo">
+            <Logo />
+          </div>
+          <div class="o-nav__list">
+            <Nav />
+          </div>
+        </div>
+      </div>
+
+      <div class="o-wrapper__content o-wrapper__content--without-header">
+        <main>
+          <slot>
+            Default slot content
+          </slot>
+        </main>
+
+        <!-- named slot -->
+        <!-- <slot name="footer"></slot> -->
+        <!-- <Footer {footerMessage} /> -->
+      </div>
+    </div>
+	</body>
+</html>

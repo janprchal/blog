@@ -1,0 +1,82 @@
+@use "../01_settings" as *;
+@use "../02_tools" as *;
+@use "sass:map";
+
+$logo: (
+  "padding": $space-nm,
+  "bg-c": $block-bg-c,
+  "max-h--m": $header-h--mobile,
+  "max-h": $header-h,
+
+  "img-h--m": 4rem,
+  "img-h": 4.8rem,
+
+  "text-c": $text-c,
+  "text-s": $text-sm,
+
+  "collapsed-nav-w": $nav-max-w--collapsed,
+);
+
+.c-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 100%;
+  max-height: map.get($logo, "max-h--m");
+  padding: map.get($logo, "padding");
+
+  background-color: map.get($logo, "bg-c");
+  color: map.get($logo, "text-c");
+  text-decoration: none;
+
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
+    color: map.get($logo, "text-c");
+  }
+
+  @include screen-min {
+    max-height: map.get($logo, "max-h");
+
+    justify-content: flex-start;
+  }
+}
+
+.c-logo__img {
+  height: map.get($logo, "img-h--m");
+  width: map.get($logo, "img-h--m");
+  margin-right: 1.2rem;
+
+  @include screen-min {
+    height: map.get($logo, "img-h");
+  }
+}
+
+.c-logo__name {
+  color: map.get($logo, "text-c");
+  font-weight: 700;
+  font-size: map.get($logo, "text-s");
+}
+
+.fluid-layout.nav-collapsed {
+  .c-logo {
+    @include screen-min {
+      width: map.get($logo, "collapsed-nav-w");
+    }
+  }
+
+  .c-logo__img {
+    @include screen-min {
+      margin-right: 0;
+    }
+  }
+
+  .c-logo__name {
+    @include screen-min {
+      display: none;
+    }
+  }
+}

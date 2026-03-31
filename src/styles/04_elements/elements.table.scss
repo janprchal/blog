@@ -1,0 +1,67 @@
+@use "../01_settings" as *;
+@use "../02_tools" as *;
+@use "sass:math";
+
+table {
+  table-layout: fixed;
+  min-width: 100%;
+
+  background-color: $block-bg-c;
+  border: 0 none;
+  border-collapse: collapse;
+  border-radius: $border-r--bigger;
+}
+
+tr {
+  height: 5rem;
+
+  border-bottom: 0.1rem solid $outline-c;
+
+  &:nth-child(even) {
+    background-color: $table-even-bg;
+  }
+
+  &:hover,
+  &:nth-child(even):hover {
+    background-color: $table-hover-bg;
+  }
+}
+
+thead tr {
+  &:last-child {
+    border-bottom: 0.1rem solid $outline-c;
+  }
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+th,
+td {
+  padding-right: math.div($col-padding-x--sm, 2);
+  // padding-right: $space-md;
+  // padding-left: $space-md;
+
+  @include tablet-min {
+    padding-right: math.div($col-padding-x--md, 2);
+    padding-left: math.div($col-padding-x--md, 2);
+  }
+
+  @include screen-min {
+    padding-right: math.div($col-padding-x--lg, 2);
+    padding-left: math.div($col-padding-x--lg, 2);
+  }
+
+  @include large-screen-min {
+    padding-right: math.div($col-padding-x--xl, 2);
+    padding-left: math.div($col-padding-x--xl, 2);
+  }
+}
+
+th {
+  color: $text-c--light;
+  font-weight: 400;
+  text-align: left;
+  text-transform: uppercase;
+}

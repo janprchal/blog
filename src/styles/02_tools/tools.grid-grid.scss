@@ -1,0 +1,32 @@
+@use "../01_settings" as *;
+@use "sass:map";
+
+@mixin create-mq($min-width, $max-width: null) {
+  @if $max-width {
+    @media only screen and (min-width: $min-width) and (max-width: $max-width) {
+      @content;
+    }
+  } @else {
+    @media only screen and (min-width: $min-width) {
+      @content;
+    }
+  }
+}
+
+@mixin create-col-classes($modifier, $min-width, $max-width: null) {
+  @include create-mq($min-width, $max-width) {
+    @for $i from 1 through map.get($grid, 'cols') {
+      .o-span#{$modifier}-#{$i} {
+        grid-column: span #{$i};
+      }
+
+      @for $j from 1 through map.get($grid, 'from-to-cols') {
+        @if $j > $i {
+          .o-span#{$modifier}-#{$i}-#{$j} {
+            grid-column: #{$i} / #{$j};
+          }
+        }
+      }
+    }
+  }
+}

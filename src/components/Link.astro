@@ -1,0 +1,56 @@
+--- 
+// Library imports
+import { Icon } from 'astro-icon/components';
+
+// Props interface
+interface Props {
+  text: string;
+  href: string;
+  icon?: {
+    name: string;
+    side: "left" | "right"
+    navLink?: boolean;
+  };
+  hasChildren?: boolean;
+  classes?: string;
+}
+
+// Props destructuring with default values
+const { 
+  text, 
+  href, 
+  icon, 
+  classes, 
+  hasChildren = false,
+  ...rest
+} = Astro.props as Props
+---
+
+<a 
+  href={href} 
+  class:list={[
+    'link',
+    classes,
+    { 'has-children': hasChildren }
+  ]}
+  {...rest}
+>
+  {
+    icon && icon.navLink  && (
+      <Icon name={icon.name} class="c-nav__icon" />
+    )
+  }
+
+  {
+    icon && !icon.navLink && icon.side === 'left' && (
+      <Icon name={icon.name} width="24" height="24" class="link-icon is-on-left" />
+    )
+  }
+
+  {text}
+  {
+    icon && !icon.navLink && icon.side === 'right' && (
+      <Icon name={icon.name} width="24" height="24" class="link-icon is-on-right" />
+    )
+  }
+</a>

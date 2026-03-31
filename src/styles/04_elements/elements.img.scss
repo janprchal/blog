@@ -1,0 +1,5 @@
+@use "../02_tools" as *;
+
+img {
+  @include responsive-img;
+}

@@ -1,0 +1,240 @@
+@use "../01_settings" as *;
+@use "../02_tools" as *;
+@use "sass:map";
+
+$table: (
+  "border-r": $border-r--bigger,
+  "box-shadow": $block-box-shadow,
+
+  "icon-size": 1.6rem,
+  "icon-padding": $space-xxs $space-xs,
+  "icon-c": $secondary-c,
+  "icon-c-hover": $secondary-c--darker,
+
+  "icon-c-negative": $negative-c,
+  "icon-c-negative-hover": $negative-c--darker,
+
+  "icon-c-positive": $positive-c,
+  "icon-c-positive-hover": $positive-c--darker,
+
+  "icon-c-cancel": $text-c--light,
+  "icon-c-cancel-hover": $text-c--lighter,
+);
+
+// table component
+.c-table {}
+
+.c-table--separate {
+  box-shadow: map.get($table, "box-shadow");
+
+  thead tr:first-child {
+    td:first-child {
+      border-radius: map.get($table, "border-r") 0 0 0;
+    }
+
+    td:last-child {
+      border-radius: 0 map.get($table, "border-r") 0 0;
+    }
+  }
+
+  tbody tr:last-child {
+    td:first-child {
+      border-radius: 0 0 0 map.get($table, "border-r");
+    }
+
+    &:last-child {
+      border-radius: 0 0 map.get($table, "border-r") 0;
+    }
+  }
+}
+
+// table with a sticky header
+.c-table--sticky-header {
+  thead tr th {
+    position: sticky;
+    top: $header-h--mobile; // height of element "o-header__inner" on mobile BP
+
+    background-color: $block-bg-c;
+    border-bottom: 0.1rem solid $outline-c;
+
+    &:first-child {
+      border-radius: map.get($table, "border-r") 0 0 0;
+    }
+    &:last-child {
+      border-radius: 0 map.get($table, "border-r") 0 0;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: -0.1rem;
+      left: 0;
+
+      width: 100%;
+      height: 0.1rem;
+
+      background-color: $outline-c;
+    }
+
+    @include screen-min {
+      top: $header-h; // height of element "o-header__inner"
+    }
+  }
+}
+
+// table with sticky left column
+.c-table--sticky-left {
+  overflow: auto;
+
+  thead th:first-child {
+    position: sticky;
+    left: 0;
+
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 1) 0%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  }
+
+  tbody th:first-child {
+    position: sticky;
+    left: 0;
+
+    background-color: $block-bg-c;
+  }
+}
+
+// table with sticky right column
+.c-table--sticky-right {
+  overflow: auto;
+
+  thead th:last-child {
+    position: sticky;
+    right: 0;
+
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 1) 100%
+    );
+  }
+
+  tbody th:last-child {
+    position: sticky;
+    right: 0;
+
+    background-color: $block-bg-c;
+  }
+}
+
+// table component in box component
+.c-table--last-row-radius {
+  tbody tr:last-child {
+    td:first-child {
+      border-radius: 0 0 0 map.get($table, "border-r");
+    }
+
+    td:last-child {
+      border-radius: 0 0 map.get($table, "border-r") 0;
+    }
+  }
+}
+
+// Hidden cell
+.c-table__hidden {
+  opacity: 0;
+}
+
+// Hidden cell is shown on hover
+.c-table tr:hover .c-table__hidden {
+  opacity: 1;
+}
+
+$cols: 12;
+@for $i from 1 through $cols {
+  .c-table__cols-#{$i} {
+    @include cols(#{$i});
+    @include md-cols(#{$i});
+    @include lg-cols(#{$i});
+    @include xl-cols(#{$i});
+  }
+}
+
+$percent: 5;
+$symbol: "%";
+
+@while $percent < 100 {
+  .c-table__w-#{$percent} {
+    width: #{$percent}#{$symbol};
+  }
+
+  $percent: $percent + 5;
+}
+
+// TODO c-table__cols-x musi mit prvni bunka puvodni margin left
+
+// icons - patent/wrapper of "icon"
+.c-table__icons {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.c-table__icon {
+  width: map.get($table, "icon-size");
+  height: map.get($table, "icon-size");
+  
+  padding: map.get($table, "icon-padding");
+
+  color: map.get($table, "icon-c");
+
+  cursor: pointer;
+
+  transition: color 0.24s linear;
+
+  &:first-child {
+    padding-left: 0;
+  }
+
+  &:last-child {
+    padding-right: 0;
+  }
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: map.get($table, "icon-c-hover");
+  }
+}
+
+.c-table__icon--negative {
+  color: map.get($table, "icon-c-negative");
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: map.get($table, "icon-c-negative-hover");
+  }
+}
+
+.c-table__icon--positive {
+  color: map.get($table, "icon-c-positive");
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: map.get($table, "icon-c-positive-hover");
+  }
+}
+
+.c-table__icon--cancel {
+  color: map.get($table, "icon-c-cancel");
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: map.get($table, "icon-c-cancel-hover");
+  }
+}

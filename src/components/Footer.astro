@@ -1,0 +1,27 @@
+---
+/**
+ * Kod v teto sekci je zpracovavan na serveru a neni predavan na klienta
+ * Ale to je mi asi jedno pro zobrazeni roku
+ */
+
+const currentYear = new Date().getFullYear();
+const { footerMessage } = Astro.props;
+---
+
+<footer>
+  {footerMessage && <p>{footerMessage}</p>}
+  <p>© 
+    Client side JS year: <span id="currentYear"></span><br />
+    Server side JS year: {currentYear} <br />
+    My Astro Blog. All rights reserved.</p>
+</footer>
+
+<!-- 
+  Sem muzeme psat klasicky clientsky JS, toto je pak zabaleno
+  a importovano jako JS module. 
+
+  I tady muzeme zobrazit soucasny rok, jen updatname textContent
+-->
+<script>
+  document.getElementById('currentYear')!.textContent = new Date().getFullYear().toString();
+</script>

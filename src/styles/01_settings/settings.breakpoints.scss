@@ -1,0 +1,52 @@
+@use 'sass:map';
+
+$breakpoints: (
+  'mobile-max': 767px,
+  'tablet-min': 768px,
+  'table-landscape-min': 1024px,
+  'screen-min': 1280px,
+  'desktop-min': 1440px,
+  'large-screen-min': 1920px,
+);
+
+@mixin mobile-only {
+  @media (max-width: map.get($breakpoints, 'mobile-max')) {
+    @content;
+  }
+}
+
+@mixin tablet-min {
+  @media (min-width: map.get($breakpoints, 'tablet-min')) {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @media (min-width: map.get($breakpoints, 'tablet-min')) and (max-width: map.get($breakpoints, 'screen-min') - 1) {
+    @content;
+  }
+}
+
+@mixin table-landscape-min {
+  @media (min-width: map.get($breakpoints, 'table-landscape-min')) {
+    @content;
+  }
+}
+
+@mixin screen-min {
+  @media (min-width: map.get($breakpoints, 'screen-min')) {
+    @content;
+  }
+}
+
+@mixin desktop-min {
+  @media (min-width: map.get($breakpoints, 'desktop-min')) {
+    @content;
+  }
+}
+
+@mixin large-screen-min {
+  @media (min-width: map.get($breakpoints, 'large-screen-min')) {
+    @content;
+  }
+}
