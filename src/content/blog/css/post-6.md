@@ -1,6 +1,5 @@
 ---
-layout: '../../layouts/BlogPostLayout.astro'
-title: Third post
+title: Sixth post
 date: 2024-11-20
 author: Jan Prchal
 image: {
