@@ -1,5 +1,4 @@
 ---
-layout: '../../layouts/BlogPostLayout.astro'
 title: Fifth post
 date: 2024-11-20
 author: Jan Prchal
@@ -9,7 +8,7 @@ image: {
 }
 description: Lipsim dolor sin ameth....
 draft: false
-category: css
+category: javascript
 perex: Simple perex which should tell ma in few sentences what is this article about. I don't know, let's say we want ot have it max three of four lines
 ---
 

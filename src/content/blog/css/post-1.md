@@ -1,6 +1,4 @@
 ---
-# zadavame jaky layout ma pouzit
-layout: '../../layouts/BlogPostLayout.astro'
 title: First post
 date: 2024-11-20
 author: Jan Prchal
