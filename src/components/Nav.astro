@@ -1,6 +1,5 @@
 ---
 // Component imports
-import Link from './Link.astro';
 import { Icon } from 'astro-icon/components';
 
 
@@ -16,13 +15,16 @@ const currentPath = Astro.url.pathname;
       {
         navData.map(item => {
           const hasChildren = item.children && item.children.length > 0;
-          const isActive = currentPath === item.href || (hasChildren && item.children.some(child => currentPath === child.href));
-          const isSubnavOpen = hasChildren && item.children.some(child => currentPath === child.href);
+          const childMatch = hasChildren && item.children.some(child => currentPath === child.href);
+          const parentMatch = currentPath === item.href || (hasChildren && currentPath.startsWith(item.href));
+          const isActive = parentMatch || childMatch || (hasChildren && currentPath === '/');
+          const isSubnavOpen = hasChildren && (childMatch || parentMatch || currentPath === '/');
 
           return (
             hasChildren ? (
               <li class="c-nav__item">
                 <a 
+                  href={item.href}
                   class="c-nav__link has-subnav" 
                   class:list={{ 'is-active': isActive }}
                 >
@@ -73,11 +75,13 @@ const currentPath = Astro.url.pathname;
 </div>
 
 <script lang="ts">
-  const btn = document.querySelectorAll('.c-nav__link.has-subnav');
+  const carets = document.querySelectorAll('.c-nav__subnav-caret');
 
-  btn?.forEach(button => {
-    button.addEventListener('click', () => {
-      const parent = button.parentElement;
+  carets?.forEach(caret => {
+    caret.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const parent = caret.closest('.c-nav__item');
       const subnav = parent?.querySelector('.c-subnav');
 
       if (subnav) {
