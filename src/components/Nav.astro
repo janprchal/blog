@@ -16,8 +16,14 @@ const currentPath = Astro.url.pathname;
       {
         navData.map(item => {
           const hasChildren = item.children && item.children.length > 0;
-          const isActive = currentPath === item.href || (hasChildren && item.children.some(child => currentPath === child.href));
-          const isSubnavOpen = hasChildren && item.children.some(child => currentPath === child.href);
+          const matchesHref = (href: string) => href !== '/' && (currentPath === href || currentPath.startsWith(href.endsWith('/') ? href : href + '/'));
+          const isActive = currentPath === item.href
+            || matchesHref(item.href)
+            || (hasChildren && item.children.some(child => currentPath === child.href || matchesHref(child.href)));
+          const isSubnavOpen = hasChildren && (
+            matchesHref(item.href)
+            || item.children.some(child => currentPath === child.href || matchesHref(child.href))
+          );
 
           return (
             hasChildren ? (
@@ -36,7 +42,7 @@ const currentPath = Astro.url.pathname;
                   class:list={{ 'is-open': isSubnavOpen }}
                 >
                   {(item.children || []).map(subItem => {
-                    const isSubActive = currentPath === subItem.href;
+                    const isSubActive = currentPath === subItem.href || matchesHref(subItem.href);
 
                     return (
                       <li class="c-subnav__item">
