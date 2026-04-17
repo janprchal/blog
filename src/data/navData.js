@@ -17,7 +17,7 @@ const navData = [
       },
       {
         name: "JavaScript",
-        href: "/blog/category/js/",
+        href: "/blog/category/javascript/",
         iconName: "mdi:language-javascript",
       },
       {
