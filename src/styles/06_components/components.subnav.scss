@@ -5,9 +5,6 @@ $subnav: (
   "bg-c": #f4f5f9,
   "icon-w": 3.6rem,
 
-  "list-bg-c": $block-bg-c,
-  "list-border-r": $border-r--bigger,
-
   "link-border-c": $outline-c,
   "link-border-c-hover": $primary-c--lightest,
   "link-padding": $space-sm $space-md,
@@ -27,12 +24,8 @@ $subnav: (
   transition: height 0.3s ease-out;
 }
 
-.c-subnav__list {
-  overflow: hidden;
-
-  background-color: map.get($subnav, "list-bg-c");
-  border-radius: map.get($subnav, "list-border-r");
-  box-shadow: 0 0 0.6rem rgba(0, 0, 0, 0.1);
+.c-subnav.is-open {
+  height: auto;
 }
 
 .c-subnav__link {

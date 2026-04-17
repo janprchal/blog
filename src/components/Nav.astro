@@ -1,51 +1,92 @@
 ---
 // Component imports
-import Link from './Link.astro';
 import { Icon } from 'astro-icon/components';
 
 
 // Data imports
 import navData from '../data/navData.js';
+
+const currentPath = Astro.url.pathname;
 ---
 
 <div class="o-nav__list">
   <nav class="c-nav">
     <ul class="c-nav__list">
-    <!-- <a href="/">
-      <Icon name="logos:vue" width="40" height="40" />
-    <ul> -->
-
-    <!--  
-      @Note
-      Kazdou jednotlivou knihovnu icon musim nainstalovat pres npm/yarn/pnpm
-      a pak ji muzeme pouzit v Icon komponentu jako name prop
-      Format je <nazev-knihovny>:<nazev-ikony> v navData.js je videt jake ikony se
-      pridaly z mdi knihovny
-    -->
-
-    <!-- 
-      TODO chce asi vymyslet jak by mela navigace fungovat
-    -->
       {
         navData.map(item => {
+          const hasChildren = item.children && item.children.length > 0;
+          const childMatch = hasChildren && item.children.some(child => currentPath === child.href);
+          const parentMatch = currentPath === item.href || (hasChildren && currentPath.startsWith(item.href));
+          const isActive = parentMatch || childMatch || (hasChildren && currentPath === '/');
+          const isSubnavOpen = hasChildren && (childMatch || parentMatch || currentPath === '/');
+
           return (
-            <li class="c-nav__item">
-              <Link
-                href={item.href} 
-                text={item.name} 
-                classes="c-nav__link"
-                data-navLink
-                data-someTestAttribute
-                icon={{
-                  name: item.iconName,
-                  side: "left",
-                  navLink: true
-                }}
-              />
-            </li>
+            hasChildren ? (
+              <li class="c-nav__item">
+                <a 
+                  href={item.href}
+                  class="c-nav__link has-subnav" 
+                  class:list={{ 'is-active': isActive }}
+                >
+                  <Icon name={item.iconName} class="c-nav__icon" width="36" height="36" />
+                  <div class="c-nav__name">{item.name}</div>
+                  {hasChildren && <span class="c-nav__subnav-caret" aria-hidden="true" />}
+                </a>
+                
+                <ul
+                  class="c-subnav"
+                  class:list={{ 'is-open': isSubnavOpen }}
+                >
+                  {(item.children || []).map(subItem => {
+                    const isSubActive = currentPath === subItem.href;
+
+                    return (
+                      <li class="c-subnav__item">
+                        <a 
+                          href={subItem.href} 
+                          class="c-subnav__link" 
+                          class:list={{ 'is-active': isSubActive }}
+                        >
+                          {subItem.name}
+                        </a>
+                      </li>
+                    );
+                  })
+                  }
+                </ul>
+              </li>
+            ) : (
+              <li class="c-nav__item">
+                <a 
+                  href={item.href} 
+                  class="c-nav__link" 
+                  class:list={{ 'is-active': isActive }}
+                >
+                  <Icon name={item.iconName} class="c-nav__icon" width="36" height="36" />
+                  <div class="c-nav__name">{item.name}</div>
+                </a>  
+              </li>
+            )
           )
         })
       }
     </ul>
   </nav>
 </div>
+
+<script lang="ts">
+  const carets = document.querySelectorAll('.c-nav__subnav-caret');
+
+  carets?.forEach(caret => {
+    caret.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const parent = caret.closest('.c-nav__item');
+      const subnav = parent?.querySelector('.c-subnav');
+
+      if (subnav) {
+        subnav.classList.toggle('is-open');
+      }
+    });
+  });
+</script>
